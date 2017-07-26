@@ -55,8 +55,8 @@ zend_module_entry grpc_module_entry = {
   grpc_functions,
   PHP_MINIT(grpc),
   PHP_MSHUTDOWN(grpc),
-  NULL,
-  NULL,
+  PHP_RINIT(grpc),
+  PHP_RSHUTDOWN(grpc),
   PHP_MINFO(grpc),
 #if ZEND_MODULE_API_NO >= 20010901
   PHP_GRPC_VERSION,
@@ -246,6 +246,23 @@ PHP_MSHUTDOWN_FUNCTION(grpc) {
   return SUCCESS;
 }
 /* }}} */
+
+/* {{{ PHP_RINIT_FUNCTION
+ */
+PHP_RINIT_FUNCTION(grpc) {
+  grpc_php_init_next_queue(TSRMLS_C);
+  return SUCCESS;
+}
+/* }}} */
+
+/* {{{ PHP_RSHUTDOWN_FUNCTION
+ */
+PHP_RSHUTDOWN_FUNCTION(grpc) {
+  grpc_php_shutdown_next_queue(TSRMLS_C);
+  return SUCCESS;
+}
+/* }}} */
+
 
 /* {{{ PHP_MINFO_FUNCTION
  */

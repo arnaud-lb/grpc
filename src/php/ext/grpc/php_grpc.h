@@ -47,6 +47,8 @@ extern zend_module_entry grpc_module_entry;
 PHP_MINIT_FUNCTION(grpc);
 /* Code that runs at module shutdown */
 PHP_MSHUTDOWN_FUNCTION(grpc);
+PHP_RINIT_FUNCTION(grpc);
+PHP_RSHUTDOWN_FUNCTION(grpc);
 /* Displays information about the module */
 PHP_MINFO_FUNCTION(grpc);
 

@@ -66,4 +66,28 @@ class UnaryCall extends AbstractCall
 
         return [$this->_deserializeResponse($event->message), $status];
     }
+
+    public function callAsync($data, $callback, array $metadata = [], array $options = [])
+    {
+        $message_array = ['message' => $this->_serializeMessage($data)];
+        if (isset($options['flags'])) {
+            $message_array['flags'] = $options['flags'];
+        }
+        $this->call->startBatch(
+            [
+                OP_SEND_INITIAL_METADATA => $metadata,
+                OP_SEND_MESSAGE => $message_array,
+                OP_SEND_CLOSE_FROM_CLIENT => true,
+                OP_RECV_INITIAL_METADATA => true,
+                OP_RECV_MESSAGE => true,
+                OP_RECV_STATUS_ON_CLIENT => true,
+            ],
+            function ($error, $event = null) use ($callback) {
+                if ($error === null) {
+                    $event->response = $this->_deserializeResponse($event->message);
+                }
+                $callback($error, $event);
+            }
+        );
+    }
 }
