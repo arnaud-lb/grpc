@@ -52,6 +52,7 @@ extern zend_class_entry *grpc_ce_call;
 PHP_GRPC_WRAP_OBJECT_START(wrapped_grpc_call)
   bool owned;
   grpc_call *wrapped;
+  bool client_async;
 PHP_GRPC_WRAP_OBJECT_END(wrapped_grpc_call)
 
 #if PHP_MAJOR_VERSION < 7

@@ -116,6 +116,11 @@ PHP_METHOD(ChannelCredentials, setDefaultRootsPem) {
                          "setDefaultRootsPem expects 1 string", 1 TSRMLS_CC);
     return;
   }
+  
+  if (default_pem_root_certs != NULL) {
+      gpr_free(default_pem_root_certs);
+  }
+
   default_pem_root_certs = gpr_malloc((pem_roots_length + 1) * sizeof(char));
   memcpy(default_pem_root_certs, pem_roots, pem_roots_length + 1);
 }

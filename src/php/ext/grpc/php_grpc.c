@@ -289,6 +289,15 @@ PHP_RINIT_FUNCTION(grpc) {
     grpc_php_init_completion_queue(TSRMLS_C);
     GRPC_G(initialized) = 1;
   }
+  grpc_php_init_next_queue(TSRMLS_C);
+  return SUCCESS;
+}
+/* }}} */
+
+/* {{{ PHP_RSHUTDOWN_FUNCTION
+ */
+PHP_RSHUTDOWN_FUNCTION(grpc) {
+  grpc_php_shutdown_next_queue(TSRMLS_C);
   return SUCCESS;
 }
 /* }}} */

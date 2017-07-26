@@ -259,6 +259,43 @@ class BaseStub
     }
 
     /**
+     *
+     * @param string   $method      The name of the method to call
+     * @param mixed    $argument    The argument to the method
+     * @param callable $deserialize A function that deserializes the response
+     * @param array    $metadata    A metadata map to send to the server
+     *                              (optional)
+     * @param array    $options     An array of options (optional)
+     */
+    protected function _simpleRequestAsync($method,
+                                   $argument,
+                                   $deserialize,
+                                   $callback,
+                                   array $metadata = [],
+                                   array $options = [])
+    {
+        $options['client_async'] = true;
+
+        $call = new UnaryCall($this->channel,
+                              $method,
+                              $deserialize,
+                              $options);
+        $jwt_aud_uri = $this->_get_jwt_aud_uri($method);
+        if (is_callable($this->update_metadata)) {
+            $metadata = call_user_func($this->update_metadata,
+                                        $metadata,
+                                        $jwt_aud_uri);
+        }
+        $metadata = $this->_validate_and_normalize_metadata(
+            $metadata);
+
+        $call->callAsync($argument, $callback, $metadata, $options);
+
+        return $call;
+    }
+
+
+    /**
      * Call a remote method that takes a stream of arguments and has a single
      * output.
      *
