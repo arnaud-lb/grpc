@@ -108,7 +108,7 @@ PHP_METHOD(Call, __construct) {
   char *host_override = NULL;
   php_grpc_int host_override_len = 0;
   wrapped_grpc_call *call = Z_WRAPPED_GRPC_CALL_P(getThis());
-  zend_bool client_async;
+  zend_bool client_async = 0;
   grpc_completion_queue *queue;
 
   /* "OsO|s" == 1 Object, 1 string, 1 Object, 1 optional string */
