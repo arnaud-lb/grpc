@@ -202,6 +202,7 @@ void batch_consume(struct batch* batch, zval *result) {
       } else {
         php_grpc_add_property_stringl(result, "message", message_str,
                                       message_len, false);
+        PHP_GRPC_FREE_STD_ZVAL(message_str);
       }
       break;
     case GRPC_OP_RECV_STATUS_ON_CLIENT:
