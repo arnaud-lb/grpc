@@ -74,7 +74,7 @@ abstract class AbstractCall
         }
         $clientAsync = $options['client_async'] ?? false;
         if ($clientAsync) {
-            $this->call = new Call($channel, $method, $deadline, null, $clientAsync);
+            $this->call = new Call($channel, $method, $deadline, $channel->getTarget(), $clientAsync);
         } else {
             $this->call = new Call($channel, $method, $deadline);
         }
