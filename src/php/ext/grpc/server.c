@@ -17,6 +17,7 @@
  */
 
 #include "call.h"
+#include "metadata_array.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

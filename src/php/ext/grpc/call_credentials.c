@@ -18,6 +18,7 @@
 
 #include "channel_credentials.h"
 #include "call_credentials.h"
+#include "metadata_array.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
